@@ -1,0 +1,26 @@
+---
+import type { Section } from "../data/catalog";
+import EntryCard from "./EntryCard.astro";
+
+interface Props {
+  section: Section;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="catalog-section" id={section.id}>
+  <div class="section-heading" data-section-block={section.id}>
+    <span class="section-eyebrow">{section.eyebrow}</span>
+    <h2>{section.title}</h2>
+    <p>{section.intro}</p>
+    <span class="section-count" data-section-count={section.id}>{section.entries.length} entries</span>
+  </div>
+
+  <div>
+    <div class="entry-grid">
+      {section.entries.map((entry) => <EntryCard entry={entry} sectionId={section.id} />)}
+    </div>
+    <p class="section-empty" data-section-empty={section.id} hidden>No entries match the current filter.</p>
+  </div>
+</section>

@@ -1,0 +1,204 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionBlock from "../components/SectionBlock.astro";
+import { channels, profile, quickFilters, sections, stats } from "../data/catalog";
+
+const title = "xihale intro";
+const description = "A navigation hub for xihale's projects, tools, websites, and substantive contributions.";
+const sectionNav = [...sections.map(({ id, title }) => ({ id, title })), { id: "channels", title: "Channels" }];
+const totalEntries = sections.reduce((sum, section) => sum + section.entries.length, 0);
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="hero-kicker">xihale / intro</p>
+      <h1>{profile.title}</h1>
+      <p class="hero-intro">{profile.intro}</p>
+
+      <div class="hero-links" aria-label="Primary links">
+        {profile.links.map((link) => (
+          <a href={link.href} target="_blank" rel="noreferrer noopener">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <aside class="hero-panel">
+      <p class="panel-label">Navigation logic</p>
+      <p class="panel-copy">
+        Signal first: live surfaces, original repos, then only the contributions that
+        still feel worth surfacing.
+      </p>
+      <nav class="panel-nav" aria-label="Page sections">
+        {sectionNav.map((section) => (
+          <a href={`#${section.id}`}>{section.title}</a>
+        ))}
+      </nav>
+    </aside>
+  </header>
+
+  <section class="stats-band" aria-label="Profile statistics">
+    {stats.map((item) => (
+      <article class="stat-card">
+        <span class="stat-value">{item.value}</span>
+        <h2>{item.label}</h2>
+        <p>{item.note}</p>
+      </article>
+    ))}
+  </section>
+
+  <nav class="section-strip" aria-label="Quick section navigation">
+    {sectionNav.map((section) => (
+      <a href={`#${section.id}`}>{section.title}</a>
+    ))}
+  </nav>
+
+  <section class="filter-bar" aria-label="Catalog filters">
+    <div class="filter-copy">
+      <span class="section-eyebrow">Browse</span>
+      <p class="filter-copy-line">Search by name, stack, note, or narrow the page with one quick tag.</p>
+    </div>
+
+    <div class="filter-controls">
+      <label class="search-wrap">
+        <span>Search</span>
+        <input
+          type="search"
+          placeholder="snirect, typst, zig, android..."
+          autocomplete="off"
+          data-filter-search
+        />
+      </label>
+
+      <div class="filter-pills" role="toolbar" aria-label="Quick filters">
+        {quickFilters.map((filter) => (
+          <button
+            type="button"
+            class="filter-pill"
+            data-filter-button={filter.token}
+            data-active={filter.token === "all" ? "true" : "false"}
+            aria-pressed={filter.token === "all" ? "true" : "false"}
+          >
+            {filter.label}
+          </button>
+        ))}
+      </div>
+
+      <p class="filter-results" data-results-count>{totalEntries} entries visible</p>
+    </div>
+  </section>
+
+  <main class="main-stack">
+    {sections.map((section) => <SectionBlock section={section} />)}
+
+    <section class="channel-section" id="channels">
+      <div class="section-heading">
+        <span class="section-eyebrow">Elsewhere</span>
+        <h2>Activity channels</h2>
+        <p>
+          The navigation site is the index. The ongoing motion still lives mostly on
+          GitHub and adjacent publishing channels.
+        </p>
+      </div>
+
+      <div class="channel-grid">
+        {channels.map((channel) => (
+          <a class="channel-card" href={channel.href} target="_blank" rel="noreferrer noopener">
+            <h3>{channel.name}</h3>
+            <p>{channel.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Built as a standalone Astro surface instead of hiding inside `about`, so the
+      information architecture can grow without fighting a prose-first blog layout.
+    </p>
+  </footer>
+</BaseLayout>
+
+<script>
+  const initCatalog = () => {
+    const cards = Array.from(document.querySelectorAll("[data-entry-card]"));
+    const buttons = Array.from(document.querySelectorAll("[data-filter-button]"));
+    const search = document.querySelector("[data-filter-search]");
+    const sectionBlocks = Array.from(document.querySelectorAll("[data-section-block]"));
+    const results = document.querySelector("[data-results-count]");
+
+    if (!cards.length || !(search instanceof HTMLInputElement)) return;
+
+    let activeFilter = "all";
+
+    const update = () => {
+      const query = search.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        if (!(card instanceof HTMLElement)) return;
+
+        const filters = (card.dataset["filters"] || "").split(/\s+/).filter(Boolean);
+        const text = card.dataset["search"] || "";
+        const matchesFilter = activeFilter === "all" || filters.includes(activeFilter);
+        const matchesQuery = !query || text.includes(query);
+        const visible = matchesFilter && matchesQuery;
+
+        card.hidden = !visible;
+        if (visible) visibleCount += 1;
+      });
+
+      sectionBlocks.forEach((block) => {
+        if (!(block instanceof HTMLElement)) return;
+
+        const id = block.dataset["sectionBlock"];
+        if (!id) return;
+
+        const sectionRoot = block.closest(".catalog-section");
+        const sectionCards = cards.filter(
+          (card) => card instanceof HTMLElement && card.dataset["section"] === id && !card.hidden,
+        );
+        const countNode = document.querySelector(`[data-section-count="${id}"]`);
+        const emptyNode = document.querySelector(`[data-section-empty="${id}"]`);
+
+        if (countNode) {
+          countNode.textContent = `${sectionCards.length} entries`;
+        }
+
+        if (emptyNode instanceof HTMLElement) {
+          emptyNode.hidden = sectionCards.length !== 0;
+        }
+
+        if (sectionRoot instanceof HTMLElement) {
+          sectionRoot.hidden = sectionCards.length === 0;
+        }
+      });
+
+      if (results) {
+        results.textContent = `${visibleCount} entries visible`;
+      }
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.getAttribute("data-filter-button") || "all";
+
+        buttons.forEach((item) => {
+          const active = item === button;
+          item.setAttribute("data-active", active ? "true" : "false");
+          item.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        update();
+      });
+    });
+
+    search.addEventListener("input", update);
+    update();
+  };
+
+  initCatalog();
+</script>

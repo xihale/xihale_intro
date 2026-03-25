@@ -1,0 +1,91 @@
+---
+import type { Entry } from "../data/catalog";
+
+interface Props {
+  entry: Entry;
+  sectionId: string;
+}
+
+const { entry, sectionId } = Astro.props;
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const tokens = [
+  sectionId,
+  entry.kind,
+  entry.status,
+  entry.year,
+  ...(entry.stack ?? []),
+  ...(entry.filters ?? []),
+]
+  .filter(Boolean)
+  .map((value) => slugify(String(value)));
+
+const searchIndex = [
+  entry.name,
+  entry.description,
+  entry.kind,
+  entry.status,
+  entry.year,
+  entry.note,
+  ...(entry.stack ?? []),
+  ...(entry.filters ?? []),
+]
+  .filter(Boolean)
+  .join(" ")
+  .toLowerCase();
+
+const primaryLink = entry.links[0];
+
+let host = primaryLink?.href ?? "";
+try {
+  host = new URL(primaryLink.href).hostname.replace(/^www\./, "");
+} catch {
+  host = primaryLink?.href ?? "";
+}
+
+const statusClass = entry.status ? `status-${slugify(entry.status)}` : undefined;
+---
+
+<article
+  class="entry-card"
+  data-entry-card
+  data-section={sectionId}
+  data-filters={tokens.join(" ")}
+  data-search={searchIndex}
+>
+  <div class="entry-topline">
+    <span class="entry-kind">{entry.kind ?? "entry"}</span>
+    {entry.year && <span class="entry-year">{entry.year}</span>}
+  </div>
+
+  <h3>{entry.name}</h3>
+  <p>{entry.description}</p>
+
+  <div class="entry-meta">
+    {entry.status && <span class:list={["entry-status", statusClass]}>{entry.status}</span>}
+    <span class="entry-host">{host}</span>
+  </div>
+
+  {
+    entry.stack && (
+      <ul class="entry-tags" aria-label={`${entry.name} stack`}>
+        {entry.stack.map((item) => <li>{item}</li>)}
+      </ul>
+    )
+  }
+
+  {entry.note && <div class="entry-note">{entry.note}</div>}
+
+  <div class="entry-actions">
+    {entry.links.map((link) => (
+      <a href={link.href} target="_blank" rel="noreferrer noopener">
+        {link.label}
+      </a>
+    ))}
+  </div>
+</article>

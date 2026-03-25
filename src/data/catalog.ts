@@ -1,0 +1,724 @@
+export interface EntryLink {
+  label: string;
+  href: string;
+}
+
+export interface Entry {
+  name: string;
+  description: string;
+  links: EntryLink[];
+  stack?: string[];
+  kind?: string;
+  status?: string;
+  year?: string;
+  note?: string;
+  filters?: string[];
+}
+
+export interface Section {
+  id: string;
+  title: string;
+  eyebrow: string;
+  intro: string;
+  entries: Entry[];
+}
+
+export interface QuickFilter {
+  label: string;
+  token: string;
+}
+
+export const profile = {
+  name: "xihale",
+  title: "A compact index of what xihale ships.",
+  intro:
+    "Mostly active on GitHub. This page is not a raw repository dump; it pulls forward the projects, websites, packages, and contribution trails most worth clicking first.",
+  links: [
+    { label: "GitHub", href: "https://github.com/xihale" },
+    { label: "Blog", href: "https://xihale.top" },
+    { label: "npm", href: "https://www.npmjs.com/search?q=xihale" },
+    { label: "AUR", href: "https://aur.archlinux.org/account/xihale" },
+  ],
+};
+
+export const stats = [
+  { label: "Original repos", value: "62", note: "public non-fork projects" },
+  { label: "Curated entries", value: "49", note: "selected for this index" },
+  { label: "Live pages", value: "20+", note: "domains, Pages, and microsites" },
+  { label: "Key contributions", value: "6", note: "fork paths worth surfacing" },
+];
+
+export const quickFilters: QuickFilter[] = [
+  { label: "All", token: "all" },
+  { label: "Live", token: "live" },
+  { label: "Web", token: "web" },
+  { label: "Tool", token: "tool" },
+  { label: "Android", token: "android" },
+  { label: "Zig", token: "zig" },
+  { label: "Typst", token: "typst" },
+  { label: "npm", token: "npm" },
+  { label: "Community", token: "community" },
+];
+
+export const sections: Section[] = [
+  {
+    id: "sites",
+    title: "Sites",
+    eyebrow: "Published surfaces",
+    intro:
+      "The public-facing layer: things with a URL, a home, or an interface. If you want the fastest feel for the work, start here before diving into source-first repos.",
+    entries: [
+      {
+        name: "blog",
+        description: "Main personal site; essays, technical notes, and the calmer writing side of this trail.",
+        links: [
+          { label: "Visit", href: "https://xihale.top" },
+          { label: "Repo", href: "https://github.com/xihale/blog" },
+        ],
+        stack: ["Astro", "CSS"],
+        kind: "main site",
+        status: "live",
+        year: "2024",
+        filters: ["web", "writing"],
+      },
+      {
+        name: "fractal",
+        description: "An interactive Mandelbrot and Julia explorer with a cleaner, more mathematical feel than a typical demo.",
+        links: [
+          { label: "Visit", href: "https://fractal.code.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/fractal" },
+        ],
+        stack: ["TypeScript", "Canvas"],
+        kind: "visual experiment",
+        status: "live",
+        year: "2023",
+        note: "One of the clearest interactive works in the collection.",
+        filters: ["web", "visual"],
+      },
+      {
+        name: "digital-tongji-calculus-exercises",
+        description: "Turns a paper calculus exercise book into something browsable, linkable, and easier to return to.",
+        links: [
+          { label: "Visit", href: "https://dtce.xihale.top/" },
+          {
+            label: "Repo",
+            href: "https://github.com/xihale/digital-tongji-calculus-exercises",
+          },
+        ],
+        stack: ["Typst"],
+        kind: "study artifact",
+        status: "live",
+        year: "2025",
+        note: "A strong example of study material turned into a public artifact.",
+        filters: ["study", "typst"],
+      },
+      {
+        name: "qask",
+        description: "A compact Q-and-A style surface designed more like a utility than a content archive.",
+        links: [
+          { label: "Visit", href: "https://q.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/qask" },
+        ],
+        stack: ["TypeScript"],
+        kind: "web tool",
+        status: "archived",
+        year: "2025",
+        filters: ["web", "tool"],
+      },
+      {
+        name: "LinkSheetDocs",
+        description: "Docs surface for LinkSheet-related notes, setup, and explanation.",
+        links: [
+          { label: "Visit", href: "http://linksheet.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/LinkSheetDocs" },
+        ],
+        stack: ["TypeScript", "Docs"],
+        kind: "documentation",
+        status: "live",
+        year: "2026",
+        filters: ["docs", "web"],
+      },
+      {
+        name: "poetry",
+        description: "A small poetry archive with a quieter presentation than a social feed.",
+        links: [
+          { label: "Visit", href: "https://poetry.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/poetry" },
+        ],
+        stack: ["TypeScript", "Next.js"],
+        kind: "content site",
+        status: "live",
+        year: "2024",
+        filters: ["web", "writing"],
+      },
+      {
+        name: "xtomato",
+        description: "A stripped-down pomodoro timer that tries not to add ceremony to focus work.",
+        links: [
+          { label: "Visit", href: "https://xtomato.code.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/xtomato" },
+        ],
+        stack: ["HTML"],
+        kind: "micro app",
+        status: "live",
+        year: "2022",
+        filters: ["web", "tool"],
+      },
+      {
+        name: "immerse",
+        description: "A browser-based focus experiment built around a calmer visual atmosphere.",
+        links: [
+          { label: "Visit", href: "https://immerse.code.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/immerse" },
+        ],
+        stack: ["TypeScript"],
+        kind: "utility site",
+        status: "live",
+        year: "2023",
+        filters: ["web", "tool"],
+      },
+      {
+        name: "ngimage",
+        description: "Nine-grid image splitter for fast layout, posting, and sharing tasks.",
+        links: [
+          { label: "Visit", href: "http://ngimage.code.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/ngimage" },
+        ],
+        stack: ["HTML"],
+        kind: "utility site",
+        status: "live",
+        year: "2024",
+        filters: ["web", "tool"],
+      },
+      {
+        name: "clash2sfa",
+        description: "A small subscription-conversion endpoint packaged as a browser-reachable utility.",
+        links: [
+          { label: "Visit", href: "https://clash2sfa-opal.vercel.app" },
+          { label: "Repo", href: "https://github.com/xihale/clash2sfa" },
+        ],
+        stack: ["Go"],
+        kind: "network utility",
+        status: "live",
+        year: "2025",
+        filters: ["web", "tool", "network"],
+      },
+      {
+        name: "Light",
+        description: "An early lightweight log and blog system for learning notes and personal writing.",
+        links: [
+          { label: "Visit", href: "http://xlog.code.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/Light" },
+        ],
+        stack: ["HTML", "CSS"],
+        kind: "site experiment",
+        status: "live",
+        year: "2022",
+        filters: ["web", "writing"],
+      },
+      {
+        name: "gsrec",
+        description: "A compact Astro microsite for list-like or course-like recommendations.",
+        links: [
+          { label: "Visit", href: "https://gsrec.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/gsrec" },
+        ],
+        stack: ["Astro"],
+        kind: "microsite",
+        status: "live",
+        year: "2026",
+        filters: ["web"],
+      },
+      {
+        name: "pcpp-6th",
+        description: "A reading companion around Professional C++ 6th edition material.",
+        links: [
+          { label: "Visit", href: "https://pcpp.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/pcpp-6th" },
+        ],
+        stack: ["Python"],
+        kind: "study site",
+        status: "live",
+        year: "2025",
+        filters: ["study", "web"],
+      },
+      {
+        name: "acm25-speech-lang-base-stl",
+        description: "A speech and language base page for ACM-related preparation material.",
+        links: [
+          { label: "Visit", href: "https://acm25.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/acm25-speech-lang-base-stl" },
+        ],
+        stack: ["Vue"],
+        kind: "study site",
+        status: "live",
+        year: "2025",
+        filters: ["study", "web"],
+      },
+      {
+        name: "pinyin-pro-demo",
+        description: "A minimal demo surface for pinyin-pro usage patterns.",
+        links: [
+          { label: "Visit", href: "https://pinyin-pro-demo.code.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/pinyin-pro-demo" },
+        ],
+        stack: ["TypeScript"],
+        kind: "demo site",
+        status: "live",
+        year: "2024",
+        filters: ["web", "demo"],
+      },
+      {
+        name: "sudoku-next",
+        description: "A browser sudoku page kept direct and lightly styled instead of gamified.",
+        links: [
+          { label: "Visit", href: "https://sudoku.code.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/sudoku-next" },
+        ],
+        stack: ["TypeScript"],
+        kind: "game site",
+        status: "live",
+        year: "2023",
+        filters: ["web", "game"],
+      },
+      {
+        name: "speechInClass",
+        description: "A small presentation aid that turns class speech material into a usable web page.",
+        links: [
+          { label: "Visit", href: "https://xihale.github.io/speechInClass/" },
+          { label: "Repo", href: "https://github.com/xihale/speechInClass" },
+        ],
+        stack: ["TypeScript"],
+        kind: "presentation site",
+        status: "live",
+        year: "2023",
+        filters: ["study", "web"],
+      },
+      {
+        name: "proxy.v.xihale.top",
+        description: "A deployed reverse-proxy surface kept as a small independent site.",
+        links: [
+          { label: "Visit", href: "https://proxyvxihaletop.vercel.app" },
+          { label: "Repo", href: "https://github.com/xihale/proxy.v.xihale.top" },
+        ],
+        stack: ["HTML"],
+        kind: "network utility",
+        status: "live",
+        year: "2024",
+        filters: ["web", "network"],
+      },
+      {
+        name: "aword",
+        description: "A tiny sentence-and-theme experiment from an earlier phase of web tinkering.",
+        links: [
+          { label: "Visit", href: "https://aword.code.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/aword" },
+        ],
+        stack: ["CSS"],
+        kind: "micro page",
+        status: "live",
+        year: "2021",
+        filters: ["web", "visual"],
+      },
+      {
+        name: "qg_intro",
+        description: "An archived landing page retained mostly as a historical waypoint.",
+        links: [
+          { label: "Visit", href: "http://qa.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/qg_intro" },
+        ],
+        stack: ["HTML"],
+        kind: "landing page",
+        status: "archived",
+        year: "2026",
+        filters: ["web"],
+      },
+    ],
+  },
+  {
+    id: "projects",
+    title: "Projects",
+    eyebrow: "Original repos",
+    intro:
+      "The source-first layer: tools, apps, and utilities that make more sense from repository history, implementation detail, or releases than from a landing page alone.",
+    entries: [
+      {
+        name: "snirect",
+        description: "Transparent HTTP and HTTPS proxy built to bypass SNI-based censorship and fit real system workflows.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/snirect" }],
+        stack: ["Go", "Networking"],
+        kind: "flagship tool",
+        status: "active",
+        year: "2026",
+        note: "Currently the highest-star original repository.",
+        filters: ["tool", "network"],
+      },
+      {
+        name: "bilibili_extract",
+        description: "Zig CLI for extracting downloaded Bilibili videos into forms easier to keep and reuse.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/bilibili_extract" }],
+        stack: ["Zig", "CLI"],
+        kind: "tool",
+        status: "active",
+        year: "2025",
+        filters: ["tool", "media", "zig"],
+      },
+      {
+        name: "unncm",
+        description: "Android app for turning NCM files into normal audio files with better metadata.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/unncm" }],
+        stack: ["Kotlin", "Android"],
+        kind: "app",
+        status: "active",
+        year: "2025",
+        filters: ["tool", "media", "android"],
+      },
+      {
+        name: "snirectAndroid",
+        description: "Android-facing companion to the Snirect line of work.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/snirectAndroid" }],
+        stack: ["Kotlin", "Android"],
+        kind: "app",
+        status: "active",
+        year: "2026",
+        filters: ["android", "network"],
+      },
+      {
+        name: "Calc-Workbook",
+        description: "Typst workbook repo for structured math exercises and cleaner study material.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/Calc-Workbook" }],
+        stack: ["Typst"],
+        kind: "study artifact",
+        status: "active",
+        year: "2026",
+        filters: ["study", "typst"],
+      },
+      {
+        name: "sharebin",
+        description: "Small paste and share utility with lower ceremony than full document platforms.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/sharebin" }],
+        stack: ["JavaScript"],
+        kind: "utility",
+        status: "active",
+        year: "2026",
+        filters: ["tool", "web"],
+      },
+      {
+        name: "fuckview",
+        description: "Automation-oriented helper for AnyView-style assignment friction.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/fuckview" }],
+        stack: ["TypeScript"],
+        kind: "utility",
+        status: "active",
+        year: "2025",
+        filters: ["tool", "web"],
+      },
+      {
+        name: "music-unlock-lib",
+        description: "C++ rewrite for unlocking proprietary music file formats.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/music-unlock-lib" }],
+        stack: ["C++", "Audio"],
+        kind: "library",
+        status: "stable",
+        year: "2024",
+        filters: ["tool", "media"],
+      },
+      {
+        name: "zig-napi",
+        description: "Zig experimentation around Node-API bindings and ecosystem plumbing.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/zig-napi" }],
+        stack: ["Zig", "Node-API"],
+        kind: "binding",
+        status: "stable",
+        year: "2025",
+        filters: ["zig", "tool"],
+      },
+      {
+        name: "snirect-shared",
+        description: "Shared building blocks extracted from Snirect-related work.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/snirect-shared" }],
+        stack: ["Go"],
+        kind: "library",
+        status: "active",
+        year: "2026",
+        filters: ["network"],
+      },
+      {
+        name: "Tempermonkey",
+        description: "Personal userscript collection for shaving friction off everyday sites.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/Tempermonkey" }],
+        stack: ["JavaScript"],
+        kind: "script set",
+        status: "active",
+        year: "2025",
+        filters: ["tool", "web"],
+      },
+      {
+        name: "cloudflare_proxy_comprehensively",
+        description: "TypeScript-heavy proxy experiment for routing websites through Cloudflare.",
+        links: [
+          { label: "Repo", href: "https://github.com/xihale/cloudflare_proxy_comprehensively" },
+        ],
+        stack: ["TypeScript"],
+        kind: "network utility",
+        status: "stable",
+        year: "2024",
+        filters: ["network", "tool"],
+      },
+      {
+        name: "xnet",
+        description: "Earlier C++ network utilities bundle.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/xnet" }],
+        stack: ["C++"],
+        kind: "network utility",
+        status: "stable",
+        year: "2023",
+        filters: ["tool", "network"],
+      },
+      {
+        name: "websites_proxy",
+        description: "Earlier proxy-oriented project around reaching restricted sites.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/websites_proxy" }],
+        stack: ["HTML"],
+        kind: "network utility",
+        status: "stable",
+        year: "2022",
+        filters: ["network", "web"],
+      },
+      {
+        name: "xjson",
+        description: "Compact JSON library from lower-level C++ exploration.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/xjson" }],
+        stack: ["C++"],
+        kind: "library",
+        status: "stable",
+        year: "2023",
+        filters: ["tool"],
+      },
+      {
+        name: "xconverter",
+        description: "Small converter practice repo with a clear tool shape.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/xconverter" }],
+        stack: ["C++"],
+        kind: "utility",
+        status: "stable",
+        year: "2024",
+        filters: ["tool"],
+      },
+      {
+        name: "messages",
+        description: "Simple PHP message board from an earlier phase of web building.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/messages" }],
+        stack: ["PHP"],
+        kind: "web app",
+        status: "stable",
+        year: "2021",
+        filters: ["web"],
+      },
+    ],
+  },
+  {
+    id: "packages",
+    title: "Packages",
+    eyebrow: "Published and reusable",
+    intro:
+      "Smaller reusable units: npm packages, Typst templates, and packaging repos that fit into other workflows instead of standing alone as products.",
+    entries: [
+      {
+        name: "paper4gdut",
+        description: "GDUT graduation thesis template in Typst; one of the clearer reusable writing artifacts in the collection.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/paper4gdut" }],
+        stack: ["Typst"],
+        kind: "template",
+        status: "published",
+        year: "2026",
+        filters: ["typst", "study"],
+      },
+      {
+        name: "hexo-xencrypt",
+        description: "Published npm plugin for encrypting Hexo pages.",
+        links: [{ label: "npm", href: "https://www.npmjs.com/package/hexo-xencrypt" }],
+        stack: ["JavaScript", "npm", "Hexo"],
+        kind: "package",
+        status: "published",
+        filters: ["npm", "tool"],
+      },
+      {
+        name: "hexo-hotreloader",
+        description: "Published helper for faster local iteration in Hexo projects.",
+        links: [
+          { label: "npm", href: "https://www.npmjs.com/package/hexo-hotreloader" },
+          { label: "Repo", href: "https://github.com/xihale/hexo-hotreloader" },
+        ],
+        stack: ["JavaScript", "npm", "Hexo"],
+        kind: "package",
+        status: "published",
+        year: "2023",
+        filters: ["npm", "tool"],
+      },
+      {
+        name: "hexo-shiki",
+        description: "Shiki-based syntax highlighting support for Hexo, shaped by an editorial interest in code presentation.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/hexo-shiki" }],
+        stack: ["TypeScript", "Hexo"],
+        kind: "package",
+        status: "published",
+        year: "2023",
+        filters: ["npm", "tool"],
+      },
+      {
+        name: "zig-template",
+        description: "Compact Zig starter for low-friction new projects.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/zig-template" }],
+        stack: ["Zig"],
+        kind: "template",
+        status: "published",
+        year: "2025",
+        filters: ["zig", "tool"],
+      },
+      {
+        name: "PKGBUILD",
+        description: "Packaging repo tied to AUR and system-distribution work.",
+        links: [{ label: "Repo", href: "https://github.com/xihale/PKGBUILD" }],
+        stack: ["Shell", "Packaging"],
+        kind: "packaging",
+        status: "active",
+        year: "2024",
+        filters: ["tool", "aur"],
+      },
+    ],
+  },
+  {
+    id: "contributions",
+    title: "Contributions",
+    eyebrow: "Substantive fork paths",
+    intro:
+      "Forks stay out unless the public trail is clear. These are the places where authored commits or merged PRs feel substantial enough to belong in the same index.",
+    entries: [
+      {
+        name: "zigcc.github.io",
+        description: "Sustained work on the Zig Chinese community site spanning layout, asset strategy, rendering fixes, and UX polish.",
+        links: [
+          {
+            label: "PRs",
+            href: "https://github.com/zigcc/zigcc.github.io/pulls?q=is%3Apr+author%3Axihale",
+          },
+          { label: "Site", href: "https://ziglang.cc/" },
+        ],
+        stack: ["CSS", "Docs", "Community"],
+        kind: "major contribution",
+        status: "ongoing",
+        year: "2025-2026",
+        filters: ["community", "web"],
+      },
+      {
+        name: "zig-course",
+        description: "Merged fixes and contributor-experience improvements for the Chinese Zig course.",
+        links: [
+          {
+            label: "PRs",
+            href: "https://github.com/zigcc/zig-course/pulls?q=is%3Apr+author%3Axihale",
+          },
+          { label: "Site", href: "https://course.ziglang.cc/" },
+        ],
+        stack: ["Zig", "Docs"],
+        kind: "major contribution",
+        status: "ongoing",
+        year: "2025-2026",
+        filters: ["community", "zig"],
+      },
+      {
+        name: "zig-cookbook",
+        description: "Examples, migration work, and documentation-oriented iteration for Zig cookbook material.",
+        links: [
+          {
+            label: "PRs",
+            href: "https://github.com/zigcc/zig-cookbook/pulls?q=is%3Apr+author%3Axihale",
+          },
+          { label: "Site", href: "https://cookbook.ziglang.cc/" },
+        ],
+        stack: ["Zig", "Docs"],
+        kind: "major contribution",
+        status: "ongoing",
+        year: "2025",
+        filters: ["community", "zig"],
+      },
+      {
+        name: "lightframe.vilinko.com",
+        description: "Repeated merged work on rebuilds, responsiveness, contributor surfaces, and shipping polish.",
+        links: [
+          {
+            label: "PRs",
+            href: "https://github.com/VilinkoStudio/lightframe.vilinko.com/pulls?q=is%3Apr+author%3Axihale",
+          },
+          { label: "Org", href: "https://github.com/VilinkoStudio" },
+        ],
+        stack: ["Web", "Vilinko"],
+        kind: "major contribution",
+        status: "merged",
+        year: "2022-2024",
+        filters: ["community", "web"],
+      },
+      {
+        name: "WrtScript",
+        description: "Merged OpenWrt script improvements around IPv6 support and smarter automation.",
+        links: [
+          {
+            label: "PRs",
+            href: "https://github.com/GDUTMeow/WrtScript/pulls?q=is%3Apr+author%3Axihale",
+          },
+          { label: "Repo", href: "https://github.com/GDUTMeow/WrtScript" },
+        ],
+        stack: ["Shell", "OpenWrt"],
+        kind: "contribution",
+        status: "merged",
+        year: "2025",
+        filters: ["community", "tool"],
+      },
+      {
+        name: "rusttalk.github.io",
+        description: "Real but smaller fixes around the RustTalk site and publishing flow.",
+        links: [
+          {
+            label: "PRs",
+            href: "https://github.com/RustTalk/rusttalk.github.io/pulls?q=is%3Apr+author%3Axihale",
+          },
+          { label: "Site", href: "https://rusttalk.github.io" },
+        ],
+        stack: ["Hugo", "Content"],
+        kind: "contribution",
+        status: "merged",
+        year: "2025",
+        filters: ["community", "writing"],
+      },
+    ],
+  },
+];
+
+export const channels = [
+  {
+    name: "GitHub",
+    href: "https://github.com/xihale",
+    description: "Primary activity stream: repositories, issues, pull requests, and release history.",
+  },
+  {
+    name: "npm",
+    href: "https://www.npmjs.com/search?q=xihale",
+    description: "Published package trail, mostly around Hexo workflow helpers and small utilities.",
+  },
+  {
+    name: "AUR",
+    href: "https://aur.archlinux.org/account/xihale",
+    description: "Package maintenance trail on Arch Linux user repositories.",
+  },
+  {
+    name: "ZigCC",
+    href: "https://github.com/zigcc",
+    description: "Community orbit where a large share of visible contribution happened.",
+  },
+  {
+    name: "VilinkoStudio",
+    href: "https://github.com/VilinkoStudio",
+    description: "One of the org spaces where repeated web-facing contribution work showed up.",
+  },
+];
