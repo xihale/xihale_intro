@@ -1,20 +1,29 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionBlock from "../components/SectionBlock.astro";
-import { channels, profile, quickFilters, sections, stats } from "../data/catalog";
+import { channels, profile, quickFilters, sections } from "../data/catalog";
 
 const title = "xihale intro";
 const description = "A navigation hub for xihale's projects, tools, websites, and substantive contributions.";
 const sectionNav = [...sections.map(({ id, title }) => ({ id, title })), { id: "channels", title: "Channels" }];
 const totalEntries = sections.reduce((sum, section) => sum + section.entries.length, 0);
+const sectionStats = sections.map((section) => ({
+  label: section.title,
+  value: String(section.entries.length),
+}));
 ---
 
 <BaseLayout title={title} description={description}>
   <header class="hero">
     <div class="hero-copy">
+      <div class="language-switch" aria-label="Language switch">
+        <a href="/" aria-current="page">EN</a>
+        <a href="/zh/">中文</a>
+      </div>
+
       <p class="hero-kicker">xihale / intro</p>
       <h1>{profile.title}</h1>
-      <p class="hero-intro">{profile.intro}</p>
+      {profile.intro && <p class="hero-intro">{profile.intro}</p>}
 
       <div class="hero-links" aria-label="Primary links">
         {profile.links.map((link) => (
@@ -26,11 +35,8 @@ const totalEntries = sections.reduce((sum, section) => sum + section.entries.len
     </div>
 
     <aside class="hero-panel">
-      <p class="panel-label">Navigation logic</p>
-      <p class="panel-copy">
-        Signal first: live surfaces, original repos, then only the contributions that
-        still feel worth surfacing.
-      </p>
+      <p class="panel-label">Logic</p>
+      <p class="panel-copy">Do interesting things.<br />Simple, raw, easy to overlook, but important all the same.</p>
       <nav class="panel-nav" aria-label="Page sections">
         {sectionNav.map((section) => (
           <a href={`#${section.id}`}>{section.title}</a>
@@ -40,11 +46,10 @@ const totalEntries = sections.reduce((sum, section) => sum + section.entries.len
   </header>
 
   <section class="stats-band" aria-label="Profile statistics">
-    {stats.map((item) => (
+    {sectionStats.map((item) => (
       <article class="stat-card">
         <span class="stat-value">{item.value}</span>
         <h2>{item.label}</h2>
-        <p>{item.note}</p>
       </article>
     ))}
   </section>
