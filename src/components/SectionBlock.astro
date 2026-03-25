@@ -4,9 +4,15 @@ import EntryCard from "./EntryCard.astro";
 
 interface Props {
   section: Section;
+  emptyMessage?: string;
+  countLabel?: string;
 }
 
-const { section } = Astro.props;
+const {
+  section,
+  emptyMessage = "No entries match the current filter.",
+  countLabel = "entries",
+} = Astro.props;
 ---
 
 <section class="catalog-section" id={section.id}>
@@ -14,13 +20,13 @@ const { section } = Astro.props;
     <span class="section-eyebrow">{section.eyebrow}</span>
     <h2>{section.title}</h2>
     <p>{section.intro}</p>
-    <span class="section-count" data-section-count={section.id}>{section.entries.length} entries</span>
+    <span class="section-count" data-section-count={section.id}>{section.entries.length} {countLabel}</span>
   </div>
 
   <div>
     <div class="entry-grid">
       {section.entries.map((entry) => <EntryCard entry={entry} sectionId={section.id} />)}
     </div>
-    <p class="section-empty" data-section-empty={section.id} hidden>No entries match the current filter.</p>
+    <p class="section-empty" data-section-empty={section.id} hidden>{emptyMessage}</p>
   </div>
 </section>

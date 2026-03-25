@@ -67,7 +67,7 @@ const statusClass = entry.status ? `status-${slugify(entry.status)}` : undefined
   <p>{entry.description}</p>
 
   <div class="entry-meta">
-    {entry.status && <span class:list={["entry-status", statusClass]}>{entry.status}</span>}
+    {entry.status && <span class:list={["entry-status", statusClass]}>{entry.statusLabel ?? entry.status}</span>}
     <span class="entry-host">{host}</span>
   </div>
 
