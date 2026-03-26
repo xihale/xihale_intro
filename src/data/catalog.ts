@@ -373,7 +373,10 @@ export const sections: Section[] = [
       {
         name: "sharebin",
         description: "Small paste and share utility with lower ceremony than full document platforms.",
-        links: [{ label: "Repo", href: "https://github.com/xihale/sharebin" }],
+        links: [
+          { label: "Live", href: "https://share.xihale.top/" },
+          { label: "Repo", href: "https://github.com/xihale/sharebin" },
+        ],
         stack: ["JavaScript"],
         kind: "utility",
         status: "active",

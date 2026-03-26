@@ -367,7 +367,10 @@ export const sections: Section[] = [
       {
         name: "sharebin",
         description: "一个比完整文档平台更轻、更直接的分享与粘贴工具。",
-        links: [{ label: "仓库", href: "https://github.com/xihale/sharebin" }],
+        links: [
+          { label: "网站", href: "https://share.xihale.top/" },
+          { label: "仓库", href: "https://github.com/xihale/sharebin" },
+        ],
         stack: ["JavaScript"],
         kind: "工具",
         status: "active",
