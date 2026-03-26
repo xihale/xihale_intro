@@ -136,6 +136,9 @@ const sectionStats = sections.map((section) => ({
     const results = document.querySelector("[data-results-count]");
 
     if (!cards.length || !(search instanceof HTMLInputElement)) return;
+    if (search.dataset.catalogBound === "true") return;
+
+    search.dataset.catalogBound = "true";
 
     let activeFilter = "all";
 
@@ -205,5 +208,9 @@ const sectionStats = sections.map((section) => ({
     update();
   };
 
+  const catalogLifecycle = new AbortController();
+
+  document.addEventListener("astro:page-load", initCatalog, { signal: catalogLifecycle.signal });
+  document.addEventListener("astro:before-swap", () => catalogLifecycle.abort(), { once: true });
   initCatalog();
 </script>
