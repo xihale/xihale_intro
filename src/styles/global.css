@@ -28,29 +28,30 @@
   --layout-inline-padding-narrow: 1rem;
   --max-width: 76rem;
 
-  --color-background: #f3f3f0;
+  --color-background: #f8f8f6;
   --color-surface: #ffffff;
-  --color-surface-muted: #f7f7f4;
-  --color-surface-strong: #ebebe7;
-  --color-control-surface: #f8f8f5;
-  --color-field-surface: #fcfcfa;
-  --color-text: #111111;
-  --color-text-secondary: #444444;
-  --color-text-muted: #707070;
-  --color-border: #d8d8d2;
-  --color-border-strong: #6b6d72;
-  --color-accent: #111111;
-  --color-accent-soft: #ebebe7;
-  --interactive-hover-bg: #f0f0ec;
-  --color-control-text: #2c2c2a;
-  --color-primary-surface: #111111;
-  --color-primary-surface-hover: #2a2a2a;
+  --color-surface-muted: #ffffff;
+  --color-surface-strong: #f2f2ef;
+  --color-control-surface: #ffffff;
+  --color-field-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-secondary: #4d4d4d;
+  --color-text-muted: #666666;
+  --color-border: #e8e8e2;
+  --color-border-strong: #a1a19b;
+  --color-accent: #000000;
+  --color-accent-soft: #f2f2ed;
+  --interactive-hover-bg: #f9f9f7;
+  --color-control-text: #333333;
+  --color-primary-surface: #000000;
+  --color-primary-surface-hover: #1a1a1a;
   --color-primary-text: #ffffff;
-  --color-selected-surface: #dfdfda;
-  --color-selected-text: #111111;
-  --color-focus-ring: #6b6d72;
+  --color-selected-surface: #e8e8e2;
+  --color-selected-text: #000000;
+  --color-focus-ring: #000000;
 
   --radius-none: 0;
+  --shadow-subtle: 0 2px 8px -2px rgba(0, 0, 0, 0.04), 0 1px 4px -1px rgba(0, 0, 0, 0.02);
   --shadow-none: none;
   --transition-base: 140ms ease;
 }
@@ -73,7 +74,7 @@ html[lang^="zh"] {
     --color-text: #f3f3f1;
     --color-text-secondary: #c8c8c4;
     --color-text-muted: #949490;
-    --color-border: #323232;
+    --color-border: #2a2a2a;
     --color-border-strong: #8a8d92;
     --color-accent: #f3f3f1;
     --color-accent-soft: #242424;
@@ -85,6 +86,7 @@ html[lang^="zh"] {
     --color-selected-surface: #2c2d30;
     --color-selected-text: #f3f3f1;
     --color-focus-ring: #8a8d92;
+    --shadow-subtle: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -137,12 +139,13 @@ img {
 }
 
 ::selection {
-  background: var(--color-accent-soft);
+  background: var(--color-selected-surface);
+  color: var(--color-selected-text);
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -151,6 +154,7 @@ img {
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-surface-strong);
+  border: 2px solid var(--color-background);
 }
 
 :focus-visible {
@@ -180,7 +184,12 @@ main {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-none);
   background: var(--color-surface);
-  box-shadow: var(--shadow-none);
+  box-shadow: var(--shadow-subtle);
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
 }
 
 .hero {
@@ -189,6 +198,7 @@ main {
   gap: 0;
   overflow: hidden;
   min-height: clamp(24rem, 44vw, 30rem);
+  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.05);
 }
 
 .hero-copy,
@@ -207,7 +217,9 @@ main {
   flex-direction: column;
   gap: var(--space-6);
   justify-content: space-between;
-  background: var(--color-surface-muted);
+  background: var(--color-surface);
+  box-shadow: none;
+  border: none;
 }
 
 .language-switch {
@@ -356,6 +368,7 @@ html[lang^="zh"] .hero h1 {
 .filter-pill:hover {
   border-color: var(--color-border-strong);
   background: var(--interactive-hover-bg);
+  transform: translateY(-1px);
 }
 
 .language-switch a[aria-current="page"],
@@ -368,6 +381,7 @@ html[lang^="zh"] .hero h1 {
   border-color: var(--color-border-strong);
   background: var(--color-selected-surface);
   color: var(--color-selected-text);
+  transform: none;
 }
 
 .language-switch a:focus-visible,
@@ -561,6 +575,15 @@ html[lang^="zh"] .section-heading h2 {
 .entry-card:hover,
 .channel-card:hover {
   border-color: var(--color-border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .entry-card:hover,
+  .channel-card:hover {
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .entry-topline {
