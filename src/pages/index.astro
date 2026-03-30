@@ -142,6 +142,45 @@ const sectionStats = sections.map((section) => ({
 
     let activeFilter = "all";
 
+    const applyHighlight = (card: HTMLElement, query: string, filter: string) => {
+      const targets = card.querySelectorAll("h3, p, .entry-tags li, .entry-note, .entry-kind, .entry-year, .entry-status");
+      const activeFilterLabel =
+        filter !== "all"
+          ? buttons
+              .find((btn) => btn.getAttribute("data-filter-button") === filter)
+              ?.textContent?.trim() || ""
+          : "";
+
+      const terms = [query, activeFilterLabel].filter((t) => t.length >= 1);
+
+      if (terms.length === 0) {
+        targets.forEach((el) => {
+          if (el instanceof HTMLElement && el.dataset.originalText) {
+            el.textContent = el.dataset.originalText;
+            delete el.dataset.originalText;
+          }
+        });
+        return;
+      }
+
+      const escapedTerms = terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+      const regex = new RegExp(`(${escapedTerms.join("|")})`, "gi");
+
+      targets.forEach((el) => {
+        if (!(el instanceof HTMLElement)) return;
+        if (!el.dataset.originalText) {
+          el.dataset.originalText = el.textContent || "";
+        }
+
+        const originalText = el.dataset.originalText;
+        if (regex.test(originalText)) {
+          el.innerHTML = originalText.replace(regex, "<mark>$1</mark>");
+        } else {
+          el.textContent = originalText;
+        }
+      });
+    };
+
     const update = () => {
       const query = search.value.trim().toLowerCase();
       let visibleCount = 0;
@@ -156,7 +195,10 @@ const sectionStats = sections.map((section) => ({
         const visible = matchesFilter && matchesQuery;
 
         card.hidden = !visible;
-        if (visible) visibleCount += 1;
+        if (visible) {
+          visibleCount += 1;
+          applyHighlight(card, query, activeFilter);
+        }
       });
 
       sectionBlocks.forEach((block) => {

@@ -96,6 +96,17 @@ html[lang^="zh"] {
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
+mark {
+  background-color: var(--color-selected-surface);
+  color: var(--color-selected-text);
+  padding: 0 1px;
+  border-radius: 1px;
+}
+
 * {
   margin: 0;
   -webkit-tap-highlight-color: transparent;
